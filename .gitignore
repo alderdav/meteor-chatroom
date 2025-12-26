@@ -1,0 +1,12 @@
+# Meteor & Node
+node_modules/
+.meteor/local
+npm-debug.log*
+.DS_Store
+
+# Build output
+build
+dist
+
+# Optional OS Files
+*.swp
