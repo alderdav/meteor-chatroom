@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Random } from "meteor/random";
+import { Link } from 'react-router-dom';
 import { RoomsCollection } from "../api/RoomsCollection";
 import { useSubscribe, useTracker } from "meteor/react-meteor-data";
 
@@ -7,7 +7,7 @@ export function Rooms({onSelectedRoom}) {
 
     const isLoading = useSubscribe('rooms');
     const rooms = useTracker(() => {
-        return [ {_id: Random.id(), name: 'Create Room'}, ...RoomsCollection.find({}).fetch() ]
+        return RoomsCollection.find({}).fetch();
     }, []);
     const [open, setOpen] = useState(false);
 
@@ -24,7 +24,8 @@ export function Rooms({onSelectedRoom}) {
             </button>
             {open && (
                 <ul className="absolute left-0 top-full mt-2 w-48 bg-white cursor-pointer">
-                    {rooms.map((room) => <li key={room._id} className="hover:bg-gray-300" onClick={() => onSelectedRoom(prev => room.name)}>{room.name}</li>)}
+                    <Link to="/create-chatroom"><li className="hover:bg-gray-300">Create Chatroom</li></Link>
+                    {rooms.map((room) => <Link to="/" key={room._id}><li className="hover:bg-gray-300" onClick={() => onSelectedRoom(prev => room.name)}>{room.name}</li></Link>)}
                 </ul>
             )}
         </div>

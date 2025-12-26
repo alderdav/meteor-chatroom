@@ -1,5 +1,5 @@
 import { useSubscribe, useTracker } from "meteor/react-meteor-data";
-import { Random } from 'meteor/random'
+import { Link } from 'react-router-dom';
 import React, { useContext, useState } from "react";
 import { UsersCollection } from "../api/UsersCollection";
 import { UserContext } from "./context/UserContext";
@@ -9,8 +9,7 @@ export function SelectUser() {
     const isLoading = useSubscribe('users');
 
     const users = useTracker(() => {
-        const savedUsers = UsersCollection.find({}).fetch();
-        return [{_id: Random.id(), user: 'Create User'}, ...savedUsers]
+        return UsersCollection.find({}).fetch();
     }, []);
 
     const [open, setOpen] = useState(false);
@@ -30,6 +29,7 @@ export function SelectUser() {
             </button>
             {open && (
                 <ul className="absolute left-0 top-full mt-2 w-48 bg-white cursor-pointer">
+                    <Link to="/create-user"><li className="hover:font-bold">Create User</li></Link>
                     {users.map((user) => <li key={user._id} onClick={() => setUser(user.user)} className="hover:font-bold">{user.user}</li>)}
                 </ul>
             )}
