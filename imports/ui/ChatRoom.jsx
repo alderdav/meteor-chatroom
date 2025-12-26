@@ -22,14 +22,16 @@ export function ChatRoom({chatRoom}) {
 
     return (
         <div className="flex justify-center h-screen bg-gray-400 p-10">
-            <div className="mx-auto border border-black w-[50vw] h-[70vh] relative">
+            <div className="mx-auto border border-black w-[50vw] relative">
                 <h1 className="flex justify-center bg-blue-500 text-white text-bold">
                     {chatRoom.length > 0 ? chatRoom : 'No Room Selected'}
                 </h1>
-                {messages.map((message) => 
-                    <Message key={message._id} msg={message.message} user={message.from} date={message.time} />
-                )}
-                <div className="bg-blue-200 absolute left-0 right-0 bottom-0 p-4 flex">
+                <div className="max-h-[70vh] overflow-y-auto">
+                    {messages.map((message) => 
+                        <Message key={message._id} msg={message.message} user={message.from} date={message.time} />
+                    )}
+                </div>
+                <div className="bg-blue-200 absolute left-0 right-0 bottom-0 p-4 flex border border-black-500 mt-2">
                     <button className="p-2 hover:bg-blue-800" onClick={insertMessage}>+</button>
                     <input className="w-full" type="text" placeholder="Enter message here...." value={input} onChange={(e) => setInput(e.target.value)} />
                 </div>
